@@ -56,7 +56,7 @@ export function ContactForm() {
         >
           Kirim lewat WhatsApp
         </button>
-        <p className="text-sm text-ink-2">Pesan akan dibuka di WhatsApp sebelum dikirim.</p>
+        <p className="text-sm text-ink-2">Pesan dibuka di WhatsApp.</p>
       </div>
     </form>
   );

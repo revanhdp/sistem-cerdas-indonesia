@@ -3,6 +3,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { Header } from "@/components/Header";
 import { JsonLd } from "@/components/JsonLd";
 import { TransitMap } from "@/components/TransitMap";
+import { Icon } from "@/components/icons";
 import { Rail, Roundel, StationHeading, StationLine, StationPhoto, indent, wrap } from "@/components/transit";
 import {
   about,
@@ -38,6 +39,7 @@ export default function Home() {
         <Projects />
         <Advantages />
         <Testimonials />
+        <CtaBanner />
         <Contact />
       </main>
       <Footer />
@@ -47,7 +49,7 @@ export default function Home() {
 
 function Hero() {
   return (
-    <section id="beranda" aria-labelledby="judul-beranda">
+    <section id="beranda" aria-labelledby="judul-beranda" className="map-paper">
       <div className={`${wrap} grid items-center gap-10 pb-12 pt-10 lg:grid-cols-12 lg:gap-10 lg:pb-16 lg:pt-14`}>
         <div className="lg:col-span-6">
           <h1
@@ -57,14 +59,37 @@ function Hero() {
             {site.name}
           </h1>
           <p className="mt-5 max-w-lg text-lg leading-relaxed text-ink-2">{site.headline}</p>
-          <a
-            href={waLink("Halo PT Sistem Cerdas Indonesia, saya ingin berkonsultasi.")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-7 inline-block rounded-full bg-ink px-6 py-3 text-[15px] font-semibold text-paper transition-colors hover:bg-web"
-          >
-            Konsultasi sekarang
-          </a>
+          <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <a
+              href={waLink("Halo PT Sistem Cerdas Indonesia, saya ingin berkonsultasi.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-ink px-6 py-3 text-[15px] font-semibold text-paper transition-colors hover:bg-web"
+            >
+              Konsultasi sekarang
+            </a>
+            <a href="#layanan" className="text-[15px] font-semibold underline-offset-4 hover:underline">
+              Lihat layanan →
+            </a>
+          </div>
+
+          <div className="mt-10 flex items-center gap-4">
+            <p className="text-sm text-ink-2">Dipercaya oleh</p>
+            <ul className="flex items-center gap-3">
+              {testimonials.items.map((t) => (
+                <li key={t.org}>
+                  <Image
+                    src={t.logo}
+                    alt={t.org}
+                    title={t.org}
+                    width={40}
+                    height={40}
+                    className="size-10 rounded-full bg-white object-contain p-1 ring-1 ring-line"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <figure className="lg:col-span-6">
@@ -81,11 +106,14 @@ function Hero() {
         </figure>
       </div>
 
-      <div className="border-y border-line">
+      <div className="border-y border-line bg-paper">
         <dl className={`${wrap} grid grid-cols-3`}>
           {stats.map((s, i) => (
             <div key={s.label} className={`flex flex-col-reverse py-5 ${i > 0 ? "border-l border-line pl-4 sm:pl-8" : ""}`}>
-              <dt className="mt-0.5 text-sm text-ink-2">{s.label}</dt>
+              <dt className="mt-1 flex items-center gap-2 text-xs text-ink-2 sm:text-sm">
+                <span aria-hidden="true" className="hidden h-0.5 w-4 sm:block" style={{ background: services.items[i].color }} />
+                {s.label}
+              </dt>
               <dd className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold leading-none tracking-[-0.02em]">{s.value}</dd>
             </div>
           ))}
@@ -156,50 +184,57 @@ function Services() {
       <div className={`${wrap} ${section}`}>
         <Rail />
         <div className={indent}>
-          <StationHeading id="judul-layanan" lead={services.intro}>
-            Layanan PT SCID
-          </StationHeading>
+          <StationHeading id="judul-layanan">Layanan</StationHeading>
 
-          <div className="mt-10 divide-y divide-line">
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
             {services.items.map((s) => {
               const transfer = "transfer" in s ? s.transfer : null;
+              const tint = s.key === "app" ? "#9a6f0c" : s.color;
               return (
                 <article
                   key={s.key}
                   aria-labelledby={`layanan-${s.key}`}
-                  className="grid gap-5 py-7 first:pt-0 last:pb-0 lg:grid-cols-12 lg:gap-10"
+                  style={{ "--c": s.color } as React.CSSProperties}
+                  className="relative flex flex-col border border-line bg-card p-6 transition-colors hover:border-[var(--c)]"
                 >
-                  <div className="flex gap-3.5 lg:col-span-5">
-                    <Roundel code={s.code} color={s.color} dark={s.key === "app"} />
-                    <div>
-                      <h3 id={`layanan-${s.key}`} className="text-lg font-bold leading-snug">
-                        {s.title}
-                      </h3>
-                      <p className="mt-1.5 text-[15px] leading-relaxed text-ink-2">{s.body}</p>
-                    </div>
+                  <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1" style={{ background: s.color }} />
+                  <div className="flex items-start justify-between">
+                    <span
+                      className="flex size-11 items-center justify-center rounded-full"
+                      style={{ background: `${s.color}1f`, color: tint }}
+                    >
+                      <Icon name={s.key} />
+                    </span>
+                    <Roundel code={s.code} color={s.color} size={22} dark={s.key === "app"} />
                   </div>
-                  <div className="pl-[42px] lg:col-span-7 lg:pl-0 lg:pt-2">
-                    <StationLine
-                      color={s.color}
-                      stops={s.stations.map((name, i) => {
-                        const to = transfer?.at === i ? line(transfer.to) : null;
-                        return {
-                          key: name,
-                          marker: to ? <span className="size-full rounded-full border-2 border-ink bg-paper" /> : undefined,
-                          content: (
-                            <p className="text-sm font-medium leading-snug">
-                              {name}
-                              {to && (
-                                <span className="mt-1 flex items-center gap-1.5 text-xs font-normal text-ink-2">
-                                  <span aria-hidden="true" className="size-1.5 rounded-full" style={{ background: to.color }} />
-                                  Transit ke {to.short.toLowerCase()}
-                                </span>
-                              )}
-                            </p>
-                          ),
-                        };
-                      })}
-                    />
+                  <h3 id={`layanan-${s.key}`} className="mt-5 text-lg font-bold leading-snug">
+                    {s.title}
+                  </h3>
+                  <p className="mt-1.5 text-[15px] leading-relaxed text-ink-2">{s.body}</p>
+                  <div className="mt-auto pt-6">
+                    <div className="border-t border-line pt-5">
+                      <StationLine
+                        color={s.color}
+                        stops={s.stations.map((name, i) => {
+                          const to = transfer?.at === i ? line(transfer.to) : null;
+                          return {
+                            key: name,
+                            marker: to ? <span className="size-full rounded-full border-2 border-ink bg-card" /> : undefined,
+                            content: (
+                              <p className="text-sm font-medium leading-snug">
+                                {name}
+                                {to && (
+                                  <span className="mt-1 flex items-center gap-1.5 text-xs font-normal text-ink-2">
+                                    <span aria-hidden="true" className="size-1.5 rounded-full" style={{ background: to.color }} />
+                                    Transit
+                                  </span>
+                                )}
+                              </p>
+                            ),
+                          };
+                        })}
+                      />
+                    </div>
                   </div>
                 </article>
               );
@@ -217,12 +252,12 @@ function Projects() {
       <div className={`${wrap} ${section}`}>
         <Rail />
         <div className={indent}>
-          <StationHeading id="judul-proyek">Proyek yang sudah berjalan</StationHeading>
+          <StationHeading id="judul-proyek">Proyek</StationHeading>
           <div className="mt-10 grid gap-10 md:grid-cols-3 md:gap-6 lg:gap-8">
             {projects.map((p, i) => {
               const l = line(p.line);
               return (
-                <article key={p.title} className={i === 1 ? "md:mt-12" : ""}>
+                <article key={p.title} className={`group ${i === 1 ? "md:mt-12" : ""}`}>
                   <StationPhoto src={p.photo} alt={p.alt} color={l.color} sizes="(min-width: 768px) 30vw, 100vw" />
                   <div className="mt-4 flex items-center gap-2 text-xs font-medium text-ink-2">
                     <span aria-hidden="true" className="size-2 rounded-full" style={{ background: l.color }} />
@@ -243,18 +278,29 @@ function Projects() {
 
 function Advantages() {
   return (
-    <section id="keunggulan" aria-labelledby="judul-keunggulan">
-      <div className={`${wrap} ${section} pt-0 lg:pt-0`}>
-        <Rail />
+    <section id="keunggulan" aria-labelledby="judul-keunggulan" className="bg-ink text-paper">
+      <div className={`${wrap} ${section}`}>
+        <Rail dark />
         <div className={indent}>
-          <StationHeading id="judul-keunggulan">Mengapa PT Sistem Cerdas Indonesia?</StationHeading>
-          <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-            {advantages.map((a) => (
-              <li key={a.title} className="border-t border-line pt-4">
-                <h3 className="font-bold leading-snug">{a.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{a.body}</p>
-              </li>
-            ))}
+          <StationHeading id="judul-keunggulan" dark>
+            Mengapa PT SCID
+          </StationHeading>
+          <ul className="mt-10 grid gap-px border border-paper/10 bg-paper/10 sm:grid-cols-2 lg:grid-cols-3">
+            {advantages.map((a, i) => {
+              const s = services.items[i % services.items.length];
+              return (
+                <li key={a.title} className="bg-ink p-6">
+                  <span
+                    className="flex size-10 items-center justify-center rounded-full"
+                    style={{ background: s.color, color: s.key === "app" ? "#1b2a3a" : "#fbfcfd" }}
+                  >
+                    <Icon name={a.icon} />
+                  </span>
+                  <h3 className="mt-4 font-bold leading-snug">{a.title}</h3>
+                  <p className="mt-1.5 text-[15px] leading-relaxed text-paper/70">{a.body}</p>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
@@ -268,9 +314,7 @@ function Testimonials() {
       <div className={`${wrap} ${section}`}>
         <Rail />
         <div className={indent}>
-          <StationHeading id="judul-testimonial" lead={testimonials.intro}>
-            Apa kata mereka tentang PT SCID?
-          </StationHeading>
+          <StationHeading id="judul-testimonial">Kata mitra kami</StationHeading>
           <div className="mt-10">
             <StationLine
               color={line("rnd").color}
@@ -283,9 +327,12 @@ function Testimonials() {
                   </span>
                 ),
                 content: (
-                  <figure className="md:mt-1">
-                    <blockquote className="text-[15px] leading-relaxed">&ldquo;{t.quote}&rdquo;</blockquote>
-                    <figcaption className="mt-3 text-sm">
+                  <figure className="flex h-full flex-col border border-line bg-card p-5 md:mt-3">
+                    <span aria-hidden="true" className="text-4xl font-bold leading-none text-rnd">
+                      &ldquo;
+                    </span>
+                    <blockquote className="mt-1 flex-1 text-[15px] leading-relaxed">{t.quote}</blockquote>
+                    <figcaption className="mt-4 border-t border-line pt-3 text-sm">
                       <span className="block font-semibold">{t.name}</span>
                       <span className="block text-ink-2">{t.role}</span>
                     </figcaption>
@@ -293,6 +340,54 @@ function Testimonials() {
                 ),
               }))}
             />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CtaBanner() {
+  // Empat jalur layanan masuk dari kanan dan berhenti di stasiun masing-masing.
+  const lines = [
+    { d: "M400 40 H230", end: [230, 40], color: "#eef1f4" },
+    { d: "M400 80 H270 L240 110 H170", end: [170, 110], color: "#d9a21b" },
+    { d: "M400 120 H320 L290 150 H230", end: [230, 150], color: "#0e8a7b" },
+    { d: "M400 175 H300", end: [300, 175], color: "#b8432b" },
+  ];
+  return (
+    <section aria-labelledby="judul-cta" className="relative overflow-hidden bg-web text-paper">
+      <svg
+        viewBox="0 0 400 210"
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-auto md:block"
+        preserveAspectRatio="xMaxYMid meet"
+      >
+        {lines.map((l) => (
+          <g key={l.d}>
+            <path d={l.d} fill="none" stroke={l.color} strokeWidth={4} strokeLinejoin="round" />
+            <circle cx={l.end[0]} cy={l.end[1]} r={6} fill="#1f5fbf" stroke={l.color} strokeWidth={3} />
+          </g>
+        ))}
+      </svg>
+      <div className={`${wrap} relative py-12 lg:py-16`}>
+        <div className="max-w-xl">
+          <h2 id="judul-cta" className="text-[clamp(1.6rem,2.8vw,2.25rem)] font-bold leading-tight tracking-[-0.015em]">
+            {cta.heading}
+          </h2>
+          <p className="mt-3 text-paper/85">{cta.body}</p>
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <a
+              href={waLink("Halo PT Sistem Cerdas Indonesia, saya ingin berkonsultasi tentang kebutuhan IT.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-paper px-6 py-3 text-[15px] font-semibold text-ink transition-colors hover:bg-white"
+            >
+              Chat WhatsApp
+            </a>
+            <a href="#kontak" className="text-[15px] font-semibold underline-offset-4 hover:underline">
+              Isi formulir →
+            </a>
           </div>
         </div>
       </div>
@@ -308,9 +403,7 @@ function Contact() {
         {/* Jalur utama berakhir di sini, di stasiun terakhir. */}
         <span aria-hidden="true" className="absolute left-4 top-0 h-[4.6rem] w-px bg-line sm:left-6 lg:left-10 lg:h-[6.1rem]" />
         <div className={indent}>
-          <StationHeading id="judul-kontak" lead={cta.body}>
-            {cta.heading}
-          </StationHeading>
+          <StationHeading id="judul-kontak">Kontak</StationHeading>
 
           <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-7">
@@ -350,7 +443,7 @@ function Footer() {
             </span>
             <p className="font-semibold">{site.name}</p>
           </div>
-          <p className="mt-3 max-w-sm text-sm leading-relaxed text-paper/70">{site.description}</p>
+          <p className="mt-3 max-w-sm text-sm leading-relaxed text-paper/70">{site.summary}</p>
         </div>
         <nav aria-label="Menu footer" className="lg:col-span-3 lg:col-start-7">
           <p className="text-sm font-semibold">Menu</p>

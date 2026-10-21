@@ -5,12 +5,27 @@ export const wrap = "relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-10";
 export const indent = "pl-7 sm:pl-10 lg:pl-14";
 
 /** Jalur utama tipis yang menyambung dari satu bagian ke bagian berikutnya. */
-export function Rail() {
-  return <span aria-hidden="true" className="absolute inset-y-0 left-4 w-px bg-line sm:left-6 lg:left-10" />;
+export function Rail({ dark = false }: { dark?: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`absolute inset-y-0 left-4 w-px sm:left-6 lg:left-10 ${dark ? "bg-paper/20" : "bg-line"}`}
+    />
+  );
 }
 
 /** Judul bagian, dengan penanda stasiun kecil di atas jalur utama. */
-export function StationHeading({ id, children, lead }: { id: string; children: React.ReactNode; lead?: React.ReactNode }) {
+export function StationHeading({
+  id,
+  children,
+  lead,
+  dark = false,
+}: {
+  id: string;
+  children: React.ReactNode;
+  lead?: React.ReactNode;
+  dark?: boolean;
+}) {
   return (
     <div className="max-w-2xl">
       <h2
@@ -19,11 +34,13 @@ export function StationHeading({ id, children, lead }: { id: string; children: R
       >
         <span
           aria-hidden="true"
-          className="absolute -left-[33px] top-[0.4em] size-[11px] rounded-full border-2 border-ink bg-paper sm:-left-[45px] lg:-left-[61px]"
+          className={`absolute -left-[33px] top-[0.4em] size-[11px] rounded-full border-2 sm:-left-[45px] lg:-left-[61px] ${
+            dark ? "border-paper bg-ink" : "border-ink bg-paper"
+          }`}
         />
         {children}
       </h2>
-      {lead && <p className="mt-3 leading-relaxed text-ink-2">{lead}</p>}
+      {lead && <p className={`mt-3 leading-relaxed ${dark ? "text-paper/70" : "text-ink-2"}`}>{lead}</p>}
     </div>
   );
 }
@@ -94,7 +111,7 @@ export function StationPhoto({
     <div className={`[clip-path:polygon(0_0,calc(100%-24px)_0,100%_24px,100%_100%,0_100%)] ${className}`}>
       <div className="h-1" style={{ background: color }} />
       <div className={`relative ${aspect} overflow-hidden bg-ink`}>
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover grayscale-[0.6]" />
+        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover grayscale-[0.6] transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0" />
         <span aria-hidden="true" className="absolute inset-0 mix-blend-multiply" style={{ background: color, opacity: 0.22 }} />
       </div>
     </div>

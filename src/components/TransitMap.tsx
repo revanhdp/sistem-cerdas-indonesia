@@ -24,8 +24,8 @@ const labels: Record<"h" | "v", Label[]> = {
   h: [
     { at: [20, 80], lines: ["Website UMKM"], anchor: "start" },
     { at: [620, 400], lines: ["Portal kampus"], anchor: "end" },
-    { at: [20, 400], lines: ["Manajemen inventori"], anchor: "start" },
-    { at: [620, 80], lines: ["Aplikasi internal perusahaan"], anchor: "end" },
+    { at: [20, 400], lines: ["Inventori"], anchor: "start" },
+    { at: [620, 80], lines: ["Aplikasi internal"], anchor: "end" },
     { at: [20, 240], lines: ["Android"], anchor: "start" },
     { at: [620, 240], lines: ["iOS"], anchor: "end" },
     { at: [340, 26], lines: ["Riset terapan"], anchor: "start" },
@@ -34,7 +34,7 @@ const labels: Record<"h" | "v", Label[]> = {
   v: [
     { at: [100, -40], lines: ["Website", "UMKM"], anchor: "middle" },
     { at: [420, 664], lines: ["Portal", "kampus"], anchor: "middle" },
-    { at: [420, -40], lines: ["Manajemen", "inventori"], anchor: "middle" },
+    { at: [420, -14], lines: ["Inventori"], anchor: "middle" },
     { at: [100, 664], lines: ["Aplikasi", "internal"], anchor: "middle" },
     { at: [260, -14], lines: ["Android"], anchor: "middle" },
     { at: [260, 664], lines: ["iOS"], anchor: "middle" },

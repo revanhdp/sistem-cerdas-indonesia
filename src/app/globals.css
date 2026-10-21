@@ -36,6 +36,14 @@ body {
   outline-offset: 3px;
 }
 
+/* Grid tipis seperti kertas peta, dipakai di latar hero. */
+.map-paper {
+  background-image:
+    linear-gradient(to right, rgb(27 42 58 / 0.075) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(27 42 58 / 0.075) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
 /* Peta di hero menggambar dirinya sekali saat halaman dibuka. */
 @keyframes draw-line {
   from {

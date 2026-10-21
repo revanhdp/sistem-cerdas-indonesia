@@ -1,4 +1,4 @@
-// Seluruh konten diambil dari https://sistemcerdas.id/ — ubah di sini, bukan di komponen.
+// Konten diringkas dari https://sistemcerdas.id/ — ubah di sini, bukan di komponen.
 
 export const site = {
   url: "https://sistemcerdas.id",
@@ -6,8 +6,9 @@ export const site = {
   shortName: "PT SCID",
   tagline: "For Smart Future",
   copyrightYear: 2026,
-  headline:
-    "Penyedia Teknologi Responsif Terbesar yang Memberdayakan Bisnis untuk Bekerja Lebih Cepat dan Lebih Baik",
+  headline: "Teknologi responsif yang membantu bisnis bekerja lebih cepat dan lebih baik.",
+  // Ringkasan pendek untuk footer; `description` tetap utuh untuk meta SEO.
+  summary: "Software house di Malang untuk UMKM, perusahaan, dan kampus.",
   description:
     "PT Sistem Cerdas Indonesia adalah mitra teknologi yang menghadirkan solusi digital, sistem cerdas, dan inovasi berbasis teknologi untuk menjawab kebutuhan bisnis di era modern.",
   address: {
@@ -45,35 +46,26 @@ export const stats = [
 ] as const;
 
 export const about = {
-  body: "PT Sistem Cerdas Indonesia adalah perusahaan rintisan di bidang teknologi yang berfokus memberikan solusi digital untuk pelaku usaha dan institusi pendidikan. Berkantor di Malang, kami berkomitmen menjadi mitra strategis bagi UMKM, perusahaan maupun universitas melalui inovasi dan kolaborasi riset berbasis teknologi.",
-  points: [
-    "Berpengalaman menyediakan layanan jangka panjang",
-    "Tim ahli yang profesional",
-    "Layanan terbaik dalam mengoptimalkan sistem IT",
-    "Meningkatkan efisiensi bisnis",
-  ],
-  value:
-    "Sebagai mitra digital yang inovatif dan berpengalaman, kami siap membantu Anda mencapai tujuan melalui pendekatan teknologi yang cerdas, fleksibel, dan berdampak nyata.",
-  vision:
-    "Menjadi perusahaan teknologi terdepan di Indonesia yang menghadirkan solusi digital inovatif, adaptif, dan berkelanjutan.",
+  body: "Perusahaan teknologi di Malang yang membangun solusi digital untuk UMKM, perusahaan, dan universitas, lewat pengembangan produk dan kolaborasi riset.",
+  points: ["Layanan jangka panjang", "Tim ahli profesional", "Optimasi sistem IT", "Efisiensi bisnis"],
+  value: "Pendekatan teknologi yang cerdas, fleksibel, dan berdampak nyata.",
+  vision: "Perusahaan teknologi terdepan di Indonesia dengan solusi digital yang inovatif, adaptif, dan berkelanjutan.",
   missions: [
-    "Mengembangkan solusi digital yang cerdas dan mudah digunakan.",
-    "Mendorong kolaborasi riset dengan universitas dan lembaga riset.",
-    "Membangun kemitraan jangka panjang melalui pelayanan responsif.",
+    "Solusi digital yang cerdas dan mudah dipakai.",
+    "Kolaborasi riset dengan universitas dan lembaga riset.",
+    "Kemitraan jangka panjang dengan layanan responsif.",
   ],
 } as const;
 
 export const services = {
-  intro:
-    "Kami menyediakan beragam layanan berbasis IT yang disesuaikan dengan kebutuhan mitra kami, antara lain:",
   items: [
     {
       key: "web",
       code: "W",
       short: "Website",
       color: "#1f5fbf",
-      title: "Pembuatan & Instalasi Website",
-      body: "Mulai dari website sederhana untuk UMKM hingga sistem portal kampus.",
+      title: "Website",
+      body: "Dari website UMKM hingga portal kampus.",
       stations: ["Website UMKM", "Portal kampus"],
     },
     {
@@ -81,8 +73,8 @@ export const services = {
       code: "A",
       short: "Aplikasi seluler",
       color: "#d9a21b",
-      title: "Pengembangan Aplikasi Seluler",
-      body: "Solusi aplikasi Android dan iOS untuk mendukung layanan digital.",
+      title: "Aplikasi Seluler",
+      body: "Aplikasi Android dan iOS untuk layanan digital Anda.",
       stations: ["Android", "iOS"],
     },
     {
@@ -90,9 +82,9 @@ export const services = {
       code: "R",
       short: "Riset",
       color: "#0e8a7b",
-      title: "Kolaborasi Riset & Pengembangan",
-      body: "Bekerja sama dengan perguruan tinggi di Malang dalam program riset terapan, pengembangan sistem informasi, dan pendampingan teknologi.",
-      stations: ["Riset terapan", "Pengembangan sistem informasi", "Pendampingan teknologi"],
+      title: "Riset & Pengembangan",
+      body: "Riset terapan bersama perguruan tinggi di Malang.",
+      stations: ["Riset terapan", "Sistem informasi", "Pendampingan teknologi"],
       // Stasiun ke-2 bersinggungan dengan jalur Sistem Informasi.
       transfer: { at: 1, to: "sis" },
     },
@@ -101,9 +93,9 @@ export const services = {
       code: "S",
       short: "Sistem informasi",
       color: "#b8432b",
-      title: "Pengembangan Sistem Informasi & Otomasi Bisnis",
-      body: "Menyediakan solusi sistem informasi terintegrasi—seperti manajemen inventori, ERP ringan, sistem akademik, hingga aplikasi internal perusahaan—untuk membantu mitra meningkatkan efisiensi operasional dan pengambilan keputusan berbasis data.",
-      stations: ["Manajemen inventori", "ERP ringan", "Sistem akademik", "Aplikasi internal perusahaan"],
+      title: "Sistem Informasi & Otomasi",
+      body: "Sistem terintegrasi untuk operasional yang efisien dan keputusan berbasis data.",
+      stations: ["Inventori", "ERP ringan", "Sistem akademik", "Aplikasi internal"],
     },
   ],
 } as const;
@@ -115,7 +107,7 @@ export const line = (key: LineKey) => services.items.find((s) => s.key === key)!
 export const projects = [
   {
     title: "Sistem penjualan AremaToys",
-    body: "Pembaruan sistem penjualan toko AremaToys yang sudah terintegrasi dengan beberapa platform marketplace.",
+    body: "Sistem penjualan yang terintegrasi dengan beberapa marketplace.",
     client: "AremaToys",
     line: "sis",
     photo: "/photos/proyek-arematoys.jpg",
@@ -123,7 +115,7 @@ export const projects = [
   },
   {
     title: "Chatbot MoChi",
-    body: "Pembuatan chatbot MoChi untuk penelitian ibu hamil dan menyusui, juga kader Posyandu.",
+    body: "Chatbot untuk penelitian ibu hamil, ibu menyusui, dan kader Posyandu.",
     client: "FIKES Universitas Brawijaya",
     line: "rnd",
     photo: "/photos/proyek-mochi.jpg",
@@ -131,8 +123,8 @@ export const projects = [
   },
   {
     title: "EARCLIP HEALTH (ECH)",
-    body: "Mitra kerja sama penelitian EARCLIP HEALTH (ECH) sebagai map guideline.",
-    client: "Pendidikan Kepelatihan Olahraga FIK – Univ. Negeri Malang",
+    body: "Mitra riset untuk map guideline EARCLIP HEALTH.",
+    client: "FIK Universitas Negeri Malang",
     line: "rnd",
     photo: "/photos/proyek-ech.jpg",
     alt: "Seorang perempuan berlatih sit-up di lantai",
@@ -140,35 +132,15 @@ export const projects = [
 ] as const satisfies readonly { line: LineKey; [k: string]: string }[];
 
 export const advantages = [
-  {
-    title: "Teknologi Mutakhir",
-    body: "PT Sistem Cerdas Indonesia selalu mengadopsi teknologi terbaru untuk memastikan setiap solusi memiliki efisiensi tinggi dan keunggulan kompetitif.",
-  },
-  {
-    title: "Pemeliharaan & Dukungan Berkelanjutan",
-    body: "Kami menyediakan layanan pemeliharaan sistem dan dukungan teknis jangka panjang untuk memastikan aplikasi dan infrastruktur Anda stabil.",
-  },
-  {
-    title: "Tim Profesional & Berkompeten",
-    body: "Proyek Anda ditangani oleh tim ahli dengan pengalaman di bidang software, cloud computing, keamanan sistem, dan implementasi IT modern.",
-  },
-  {
-    title: "Berpengalaman di Berbagai Industri",
-    body: "Berbagai klien pemerintahan, pendidikan, UMKM, dan perusahaan swasta telah mempercayakan kebutuhan digital mereka kepada kami.",
-  },
-  {
-    title: "Proses Cepat & Efisien",
-    body: "Dengan metodologi kerja yang terstruktur dan penggunaan teknologi canggih, setiap proyek selesai tepat waktu tanpa mengorbankan kualitas.",
-  },
-  {
-    title: "Keamanan Terjamin",
-    body: "Kami menjunjung tinggi keamanan data. Setiap proyek dilengkapi standar perlindungan terbaik untuk mencegah risiko kebocoran dan ancaman siber.",
-  },
+  { icon: "chip", title: "Teknologi mutakhir", body: "Selalu memakai teknologi terbaru agar solusi efisien dan kompetitif." },
+  { icon: "wrench", title: "Dukungan berkelanjutan", body: "Pemeliharaan dan dukungan teknis jangka panjang agar sistem tetap stabil." },
+  { icon: "users", title: "Tim profesional", body: "Berpengalaman di software, cloud, keamanan sistem, dan implementasi IT." },
+  { icon: "building", title: "Lintas industri", body: "Dipercaya klien pemerintahan, pendidikan, UMKM, dan swasta." },
+  { icon: "bolt", title: "Cepat & efisien", body: "Proses terstruktur, selesai tepat waktu tanpa mengorbankan kualitas." },
+  { icon: "shield", title: "Keamanan terjamin", body: "Standar perlindungan data di setiap proyek untuk mencegah kebocoran." },
 ] as const;
 
 export const testimonials = {
-  intro:
-    "Terima kasih telah berkerjasama dengan kami PT Sistem Cerdas Indonesia, testimoni Anda memberikan semangat dan harapan bagi tim kami untuk terus berkembang.",
   items: [
     {
       quote:
@@ -182,7 +154,7 @@ export const testimonials = {
       quote:
         "Terima kasih PT.SCID atas supportnya untuk mitra kejasama di penelitian kami EARCLIP HEALTH (ECH) sebagai map guideline.",
       name: "Prisca Widiawati, M.Pd",
-      role: "Pendidikan Kepelatihan Olahraga FIK – Univ. Negeri Malang",
+      role: "FIK Universitas Negeri Malang",
       logo: "/clients/um.png",
       org: "Universitas Negeri Malang",
     },
@@ -212,6 +184,6 @@ export const team = {
 } as const;
 
 export const cta = {
-  heading: "Wujudkan Kebutuhan IT Anda Bersama PT Sistem Cerdas Indonesia",
-  body: "PT Sistem Cerdas Indonesia menawarkan rangkaian solusi teknologi yang dirancang secara presisi untuk mendukung perkembangan bisnis Anda. Dengan pendekatan yang efisien dan inovatif, kami membantu memperkuat sistem, meningkatkan produktivitas, dan mendorong perusahaan Anda beradaptasi secara optimal di era digital.",
+  heading: "Wujudkan kebutuhan IT Anda",
+  body: "Ceritakan kebutuhan Anda, kami bantu rancang solusinya.",
 } as const;
