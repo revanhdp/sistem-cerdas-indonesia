@@ -4,17 +4,17 @@ import { Header } from "@/components/Header";
 import { JsonLd } from "@/components/JsonLd";
 import { TransitMap } from "@/components/TransitMap";
 import { Icon } from "@/components/icons";
-import { Rail, Roundel, StationHeading, StationLine, StationPhoto, indent, wrap } from "@/components/transit";
+import { Roundel, SectionHeading, StationPhoto, wrap } from "@/components/transit";
 import {
   about,
   advantages,
   cta,
+  facts,
   line,
   nav,
   projects,
   services,
   site,
-  stats,
   testimonials,
   waLink,
 } from "@/content/site";
@@ -107,14 +107,17 @@ function Hero() {
       </div>
 
       <div className="border-y border-line bg-paper">
-        <dl className={`${wrap} grid grid-cols-3`}>
-          {stats.map((s, i) => (
-            <div key={s.label} className={`flex flex-col-reverse py-5 ${i > 0 ? "border-l border-line pl-4 sm:pl-8" : ""}`}>
-              <dt className="mt-1 flex items-center gap-2 text-xs text-ink-2 sm:text-sm">
-                <span aria-hidden="true" className="hidden h-0.5 w-4 sm:block" style={{ background: services.items[i].color }} />
-                {s.label}
+        <dl className={`${wrap} grid sm:grid-cols-3`}>
+          {facts.map((f, i) => (
+            <div
+              key={f.label}
+              className={`py-4 sm:py-5 ${i > 0 ? "border-t border-line sm:border-l sm:border-t-0 sm:pl-8" : ""}`}
+            >
+              <dt className="flex items-center gap-2 text-xs text-ink-2 sm:text-[13px]">
+                <span aria-hidden="true" className="h-0.5 w-4" style={{ background: services.items[i].color }} />
+                {f.label}
               </dt>
-              <dd className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold leading-none tracking-[-0.02em]">{s.value}</dd>
+              <dd className="mt-1 font-semibold leading-snug">{f.value}</dd>
             </div>
           ))}
         </dl>
@@ -127,9 +130,8 @@ function About() {
   return (
     <section id="tentang" aria-labelledby="judul-tentang">
       <div className={`${wrap} ${section}`}>
-        <Rail />
-        <div className={indent}>
-          <StationHeading id="judul-tentang">Tentang kami</StationHeading>
+        <div>
+          <SectionHeading id="judul-tentang">Tentang kami</SectionHeading>
           <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-7">
               <p className="text-lg leading-relaxed">{about.body}</p>
@@ -182,65 +184,79 @@ function Services() {
   return (
     <section id="layanan" aria-labelledby="judul-layanan" className="bg-paper-2">
       <div className={`${wrap} ${section}`}>
-        <Rail />
-        <div className={indent}>
-          <StationHeading id="judul-layanan">Layanan</StationHeading>
+        <SectionHeading id="judul-layanan" lead={services.lead}>
+          Layanan
+        </SectionHeading>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
-            {services.items.map((s) => {
-              const transfer = "transfer" in s ? s.transfer : null;
-              const tint = s.key === "app" ? "#9a6f0c" : s.color;
-              return (
-                <article
-                  key={s.key}
-                  aria-labelledby={`layanan-${s.key}`}
-                  style={{ "--c": s.color } as React.CSSProperties}
-                  className="relative flex flex-col border border-line bg-card p-6 transition-colors hover:border-[var(--c)]"
-                >
-                  <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1" style={{ background: s.color }} />
-                  <div className="flex items-start justify-between">
-                    <span
-                      className="flex size-11 items-center justify-center rounded-full"
-                      style={{ background: `${s.color}1f`, color: tint }}
-                    >
-                      <Icon name={s.key} />
+        <ol className="mt-12">
+          {services.items.map((s, i) => {
+            const examples = projects.filter((p) => p.line === s.key);
+            return (
+              <li
+                key={s.key}
+                aria-labelledby={`layanan-${s.key}`}
+                className="relative grid gap-7 border-t border-ink/15 py-10 lg:grid-cols-12 lg:gap-12"
+              >
+                <span aria-hidden="true" className="absolute -top-px left-0 h-[3px] w-20" style={{ background: s.color }} />
+
+                <div className="lg:col-span-5">
+                  <div className="flex items-center gap-3">
+                    <Roundel code={s.code} color={s.color} size={36} dark={s.key === "app"} />
+                    <span aria-hidden="true" className="text-sm font-semibold tabular-nums text-ink-2">
+                      {String(i + 1).padStart(2, "0")}
                     </span>
-                    <Roundel code={s.code} color={s.color} size={22} dark={s.key === "app"} />
                   </div>
-                  <h3 id={`layanan-${s.key}`} className="mt-5 text-lg font-bold leading-snug">
+                  <h3 id={`layanan-${s.key}`} className="mt-4 text-[clamp(1.45rem,2.4vw,1.85rem)] font-bold leading-tight tracking-[-0.01em]">
                     {s.title}
                   </h3>
-                  <p className="mt-1.5 text-[15px] leading-relaxed text-ink-2">{s.body}</p>
-                  <div className="mt-auto pt-6">
-                    <div className="border-t border-line pt-5">
-                      <StationLine
-                        color={s.color}
-                        stops={s.stations.map((name, i) => {
-                          const to = transfer?.at === i ? line(transfer.to) : null;
-                          return {
-                            key: name,
-                            marker: to ? <span className="size-full rounded-full border-2 border-ink bg-card" /> : undefined,
-                            content: (
-                              <p className="text-sm font-medium leading-snug">
-                                {name}
-                                {to && (
-                                  <span className="mt-1 flex items-center gap-1.5 text-xs font-normal text-ink-2">
-                                    <span aria-hidden="true" className="size-1.5 rounded-full" style={{ background: to.color }} />
-                                    Transit
-                                  </span>
-                                )}
-                              </p>
-                            ),
-                          };
-                        })}
-                      />
+                  <p className="mt-2.5 max-w-md text-[15px] leading-relaxed text-ink-2">{s.body}</p>
+                  <a
+                    href={waLink(`Halo PT Sistem Cerdas Indonesia, saya ingin bertanya soal layanan ${s.title}.`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 inline-block text-[15px] font-semibold underline decoration-2 underline-offset-4"
+                    style={{ textDecorationColor: s.color }}
+                  >
+                    Tanya soal {s.short.toLowerCase()} →
+                  </a>
+                </div>
+
+                <div className="lg:col-span-7">
+                  <dl className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
+                    {s.parts.map((part) => (
+                      <div key={part.name}>
+                        <dt className="flex items-center gap-2.5 font-semibold leading-snug">
+                          <span aria-hidden="true" className="size-2 shrink-0" style={{ background: s.color }} />
+                          {part.name}
+                        </dt>
+                        <dd className="mt-1.5 pl-[18px] text-[15px] leading-relaxed text-ink-2">{part.note}</dd>
+                      </div>
+                    ))}
+                  </dl>
+
+                  {examples.length > 0 && (
+                    <div className="mt-7 border-t border-line pt-5">
+                      <p className="text-xs font-medium text-ink-2">Contoh proyek</p>
+                      <ul className="mt-3 flex flex-wrap gap-x-8 gap-y-4">
+                        {examples.map((p) => (
+                          <li key={p.title} className="flex items-center gap-3">
+                            <span className="relative size-12 shrink-0 overflow-hidden bg-ink">
+                              <Image src={p.photo} alt="" fill sizes="48px" className="object-cover grayscale-[0.4]" />
+                            </span>
+                            <span className="text-sm leading-snug">
+                              <span className="block font-semibold">{p.title}</span>
+                              <span className="block text-ink-2">{p.client}</span>
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );
@@ -250,9 +266,8 @@ function Projects() {
   return (
     <section id="proyek" aria-labelledby="judul-proyek">
       <div className={`${wrap} ${section}`}>
-        <Rail />
-        <div className={indent}>
-          <StationHeading id="judul-proyek">Proyek</StationHeading>
+        <div>
+          <SectionHeading id="judul-proyek">Proyek</SectionHeading>
           <div className="mt-10 grid gap-10 md:grid-cols-3 md:gap-6 lg:gap-8">
             {projects.map((p, i) => {
               const l = line(p.line);
@@ -280,11 +295,10 @@ function Advantages() {
   return (
     <section id="keunggulan" aria-labelledby="judul-keunggulan" className="bg-ink text-paper">
       <div className={`${wrap} ${section}`}>
-        <Rail dark />
-        <div className={indent}>
-          <StationHeading id="judul-keunggulan" dark>
+        <div>
+          <SectionHeading id="judul-keunggulan" dark>
             Mengapa PT SCID
-          </StationHeading>
+          </SectionHeading>
           <ul className="mt-10 grid gap-px border border-paper/10 bg-paper/10 sm:grid-cols-2 lg:grid-cols-3">
             {advantages.map((a, i) => {
               const s = services.items[i % services.items.length];
@@ -312,36 +326,24 @@ function Testimonials() {
   return (
     <section id="testimonial" aria-labelledby="judul-testimonial" className="bg-paper-2">
       <div className={`${wrap} ${section}`}>
-        <Rail />
-        <div className={indent}>
-          <StationHeading id="judul-testimonial">Kata mitra kami</StationHeading>
-          <div className="mt-10">
-            <StationLine
-              color={line("rnd").color}
-              markerSize={44}
-              stops={testimonials.items.map((t) => ({
-                key: t.name,
-                marker: (
-                  <span className="flex size-full items-center justify-center rounded-full border-2 border-rnd bg-white">
-                    <Image src={t.logo} alt={`Logo ${t.org}`} width={32} height={32} className="size-8 rounded-full object-contain" />
-                  </span>
-                ),
-                content: (
-                  <figure className="flex h-full flex-col border border-line bg-card p-5 md:mt-3">
-                    <span aria-hidden="true" className="text-4xl font-bold leading-none text-rnd">
-                      &ldquo;
-                    </span>
-                    <blockquote className="mt-1 flex-1 text-[15px] leading-relaxed">{t.quote}</blockquote>
-                    <figcaption className="mt-4 border-t border-line pt-3 text-sm">
-                      <span className="block font-semibold">{t.name}</span>
-                      <span className="block text-ink-2">{t.role}</span>
-                    </figcaption>
-                  </figure>
-                ),
-              }))}
-            />
-          </div>
-        </div>
+        <SectionHeading id="judul-testimonial">Kata mitra kami</SectionHeading>
+        <ul className="mt-10 grid gap-5 md:grid-cols-3">
+          {testimonials.items.map((t) => (
+            <li key={t.name}>
+              <figure className="flex h-full flex-col border border-line bg-card p-6">
+                <div className="flex items-center gap-3">
+                  <Image src={t.logo} alt={`Logo ${t.org}`} width={36} height={36} className="size-9 rounded-full object-contain ring-1 ring-line" />
+                  <span className="text-sm font-semibold leading-tight">{t.org}</span>
+                </div>
+                <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed">&ldquo;{t.quote}&rdquo;</blockquote>
+                <figcaption className="mt-5 border-t border-line pt-3 text-sm">
+                  <span className="block font-semibold">{t.name}</span>
+                  <span className="block text-ink-2">{t.role}</span>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
@@ -400,10 +402,8 @@ function Contact() {
   return (
     <section id="kontak" aria-labelledby="judul-kontak">
       <div className={`${wrap} ${section}`}>
-        {/* Jalur utama berakhir di sini, di stasiun terakhir. */}
-        <span aria-hidden="true" className="absolute left-4 top-0 h-[4.6rem] w-px bg-line sm:left-6 lg:left-10 lg:h-[6.1rem]" />
-        <div className={indent}>
-          <StationHeading id="judul-kontak">Kontak</StationHeading>
+        <div>
+          <SectionHeading id="judul-kontak">Kontak</SectionHeading>
 
           <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-7">

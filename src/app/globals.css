@@ -75,7 +75,52 @@ body {
   animation-delay: 1.5s;
 }
 
+/* Logo di header: berputar sekali saat dibuka, dan lagi saat disorot. Tagline muncul huruf demi huruf. */
+@keyframes spin-load {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-hover {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes type-reveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.logo-mark {
+  animation: spin-load 1.3s cubic-bezier(0.65, 0, 0.35, 1) 0.2s both;
+}
+
+.logo-link:hover .logo-mark {
+  animation: spin-hover 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.tagline-type {
+  animation: type-reveal 0.9s steps(16, end) 1.1s both;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .logo-mark,
+  .logo-link:hover .logo-mark,
+  .tagline-type {
+    animation: none;
+  }
   html {
     scroll-behavior: auto;
   }

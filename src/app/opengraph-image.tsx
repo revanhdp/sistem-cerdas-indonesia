@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { site, stats } from "@/content/site";
+import { services, site } from "@/content/site";
 
 export const alt = `${site.name} — ${site.tagline}`;
 export const size = { width: 1200, height: 630 };
@@ -39,11 +39,11 @@ export default function Image() {
             Website, aplikasi seluler, sistem informasi & kolaborasi riset.
           </div>
         </div>
-        <div style={{ display: "flex", gap: 56, borderTop: "3px solid #1b2a3a", paddingTop: 24 }}>
-          {stats.map((s) => (
-            <div key={s.label} style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
-              <span style={{ fontSize: 48, fontWeight: 700, color: "#1f5fbf" }}>{s.value}</span>
-              <span style={{ fontSize: 26, color: "#46586b" }}>{s.label}</span>
+        <div style={{ display: "flex", gap: 44, borderTop: "3px solid #1b2a3a", paddingTop: 24 }}>
+          {services.items.map((s) => (
+            <div key={s.key} style={{ display: "flex", alignItems: "center", gap: 14 }}>
+              <span style={{ width: 22, height: 22, borderRadius: 11, background: s.color }} />
+              <span style={{ fontSize: 28, color: "#1b2a3a" }}>{s.short}</span>
             </div>
           ))}
         </div>

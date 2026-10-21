@@ -39,10 +39,11 @@ export const nav = [
   { id: "kontak", label: "Kontak" },
 ] as const;
 
-export const stats = [
-  { value: "25+", label: "Project selesai" },
-  { value: "10+", label: "Tim handal" },
-  { value: "50+", label: "Pelanggan puas" },
+// Pengganti angka-angka capaian: hanya fakta yang bisa dicek, bukan klaim.
+export const facts = [
+  { label: "Kantor", value: "Malang, Jawa Timur" },
+  { label: "Melayani", value: "UMKM, perusahaan, dan kampus" },
+  { label: "Cara mulai", value: "Ceritakan kebutuhan lewat WhatsApp" },
 ] as const;
 
 export const about = {
@@ -58,6 +59,7 @@ export const about = {
 } as const;
 
 export const services = {
+  lead: "Empat layanan yang bisa dipesan sendiri-sendiri atau digabung, dari website sampai riset bersama kampus.",
   items: [
     {
       key: "web",
@@ -65,8 +67,11 @@ export const services = {
       short: "Website",
       color: "#1f5fbf",
       title: "Website",
-      body: "Dari website UMKM hingga portal kampus.",
-      stations: ["Website UMKM", "Portal kampus"],
+      body: "Dari website sederhana untuk UMKM hingga sistem portal kampus.",
+      parts: [
+        { name: "Website UMKM", note: "Profil usaha, katalog produk, dan tombol pesan lewat WhatsApp." },
+        { name: "Portal kampus", note: "Informasi, pendaftaran, dan layanan sivitas dalam satu pintu." },
+      ],
     },
     {
       key: "app",
@@ -74,8 +79,11 @@ export const services = {
       short: "Aplikasi seluler",
       color: "#d9a21b",
       title: "Aplikasi Seluler",
-      body: "Aplikasi Android dan iOS untuk layanan digital Anda.",
-      stations: ["Android", "iOS"],
+      body: "Aplikasi Android dan iOS untuk mendukung layanan digital.",
+      parts: [
+        { name: "Android", note: "Rilis di Google Play untuk jangkauan pengguna terluas." },
+        { name: "iOS", note: "Rilis di App Store untuk pengguna iPhone dan iPad." },
+      ],
     },
     {
       key: "rnd",
@@ -83,10 +91,12 @@ export const services = {
       short: "Riset",
       color: "#0e8a7b",
       title: "Riset & Pengembangan",
-      body: "Riset terapan bersama perguruan tinggi di Malang.",
-      stations: ["Riset terapan", "Sistem informasi", "Pendampingan teknologi"],
-      // Stasiun ke-2 bersinggungan dengan jalur Sistem Informasi.
-      transfer: { at: 1, to: "sis" },
+      body: "Kerja sama dengan perguruan tinggi di Malang untuk riset terapan, pengembangan sistem informasi, dan pendampingan teknologi.",
+      parts: [
+        { name: "Riset terapan", note: "Mengubah pertanyaan penelitian jadi prototipe, seperti chatbot MoChi." },
+        { name: "Sistem informasi", note: "Hasil riset yang matang lanjut dibangun jadi sistem utuh." },
+        { name: "Pendampingan teknologi", note: "Pendampingan teknis selama penelitian berjalan." },
+      ],
     },
     {
       key: "sis",
@@ -95,7 +105,12 @@ export const services = {
       color: "#b8432b",
       title: "Sistem Informasi & Otomasi",
       body: "Sistem terintegrasi untuk operasional yang efisien dan keputusan berbasis data.",
-      stations: ["Inventori", "ERP ringan", "Sistem akademik", "Aplikasi internal"],
+      parts: [
+        { name: "Inventori", note: "Stok masuk dan keluar tercatat, termasuk yang tersebar di beberapa marketplace." },
+        { name: "ERP ringan", note: "Penjualan, pembelian, dan keuangan dasar di satu tempat, tanpa kerumitan ERP besar." },
+        { name: "Sistem akademik", note: "Data mahasiswa, jadwal, dan nilai untuk kampus atau lembaga pendidikan." },
+        { name: "Aplikasi internal", note: "Alat khusus untuk alur kerja yang tidak ada di aplikasi siap pakai." },
+      ],
     },
   ],
 } as const;
